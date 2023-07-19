@@ -1,0 +1,42 @@
+2023-07-18 21:35:54,016 - main - INFO - forecast request for coin BTC
+2023-07-18 21:35:56,341 - main - INFO - db not up to date
+2023-07-18 21:35:56,341 - main - INFO - fetching daily data for BTC from coinbase
+2023-07-18 21:35:56,736 - main - INFO - adding 4 new rows to db
+2023-07-18 21:35:58,581 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\dev\webapps\crypto-opportunity-service\main.py", line 58, in get_predictions
+    predictions = predict(data)
+  File "C:\dev\webapps\crypto-opportunity-service\main.py", line 125, in predict
+    close_data = hist_data[['unix', 'close']]
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3813, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, "columns")[1]
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 6070, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 6133, in _raise_if_missing
+    raise KeyError(f"{not_found} not in index")
+KeyError: "['unix'] not in index"
+2023-07-18 21:36:52,305 - main - INFO - forecast request for coin BTC
+2023-07-18 21:36:55,111 - main - INFO - db up to date
+2023-07-18 21:36:55,388 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1823, in full_dispatch_request
+    return self.finalize_request(rv)
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1842, in finalize_request
+    response = self.make_response(rv)
+  File "C:\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2170, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a Series.
+2023-07-18 21:38:45,889 - main - INFO - forecast request for coin BTC
+2023-07-18 21:38:47,062 - main - INFO - db up to date

@@ -2,6 +2,7 @@ import json
 
 from flask import Flask, request
 import pandas as pd
+import numpy as np
 import sqlalchemy
 from sqlalchemy import sql
 from flask_limiter import Limiter
@@ -9,6 +10,8 @@ from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 import requests
 import logging
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.arima.model import ARIMA
 
 
 # create console logger and file logger
@@ -45,6 +48,15 @@ def daily_price_hist():
     logger.info(f"price-hist request for coin {coin}")
     data = fetch_daily_data(coin)
     return data.to_json(orient="records")
+
+
+@app.route("/forecast", methods=['GET'])
+def get_predictions():
+    coin = request.args.get('coin')
+    logger.info(f"forecast request for coin {coin}")
+    data = fetch_daily_data(coin)
+    predictions = predict(data)
+    return predictions.to_json()
 
 
 def fetch_daily_data(coin: str):
@@ -107,6 +119,18 @@ def is_db_up_to_date(data: pd.DataFrame):
     now_gmt = pd.Timestamp.now(tz='GMT').tz_localize(None)
     yesterday = now_gmt - pd.Timedelta(days=1)
     return db_date > yesterday
+
+
+def predict(hist_data: pd.DataFrame):
+    close_data = hist_data[['date', 'close']]
+    close_data = close_data.set_index('date')
+    close_data_log = np.log(close_data)
+    rolling_mean = close_data_log.rolling(window=12).mean()
+    log_minus_mean = close_data_log - rolling_mean
+    log_minus_mean.dropna(inplace=True)
+    model = ARIMA(log_minus_mean, order=(2, 1, 2))
+    results = model.fit()
+    return results.forecast(steps=7)
 
 
 if __name__ == '__main__':
