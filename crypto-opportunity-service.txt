@@ -40,3 +40,140 @@ Traceback (most recent call last):
 TypeError: The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a Series.
 2023-07-18 21:38:45,889 - main - INFO - forecast request for coin BTC
 2023-07-18 21:38:47,062 - main - INFO - db up to date
+2023-07-19 21:19:49,392 - main - INFO - forecast request for coin BTC
+2023-07-19 21:19:50,766 - main - INFO - db not up to date
+2023-07-19 21:19:50,766 - main - INFO - fetching daily data for BTC from coinbase
+2023-07-19 21:19:50,969 - main - INFO - adding 1 new rows to db
+2023-07-19 21:22:12,722 - main - INFO - forecast request for coin BTC
+2023-07-19 21:22:14,021 - main - INFO - db up to date
+2023-07-19 21:27:58,151 - main - INFO - forecast request for coin BTC
+2023-07-19 21:27:59,398 - main - INFO - db up to date
+2023-07-19 21:27:59,401 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 58, in get_predictions
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 131, in predict
+    model = ARIMA(log_minus_mean, order=(2, 1, 2), dates=log_minus_mean.index)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\model.py", line 158, in __init__
+    self._spec_arima = SARIMAXSpecification(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\specification.py", line 446, in __init__
+    self._model = TimeSeriesModel(endog, exog=exog, dates=dates, freq=freq,
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\base\tsa_model.py", line 473, in __init__
+    self._init_dates(dates, freq)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\base\tsa_model.py", line 603, in _init_dates
+    raise ValueError(
+ValueError: No frequency information was provided with date index and no frequency could be inferred.
+2023-07-19 21:29:16,979 - main - INFO - forecast request for coin BTC
+2023-07-19 21:29:18,176 - main - INFO - db up to date
+2023-07-19 21:32:05,804 - main - INFO - forecast request for coin BTC
+2023-07-19 21:32:07,082 - main - INFO - db up to date
+2023-07-19 21:33:36,143 - main - INFO - forecast request for coin BTC
+2023-07-19 21:33:37,323 - main - INFO - db up to date
+2023-07-19 21:33:37,506 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 59, in get_predictions
+    return predictions.to_json()
+AttributeError: 'DatetimeIndex' object has no attribute 'to_json'
+2023-07-19 21:34:42,976 - main - INFO - forecast request for coin BTC
+2023-07-19 21:34:44,080 - main - INFO - db up to date
+2023-07-19 21:37:30,866 - main - INFO - forecast request for coin BTC
+2023-07-19 21:37:31,968 - main - INFO - db up to date
+2023-07-19 21:37:32,155 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 58, in get_predictions
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 135, in predict
+    forecast['date'] = [(i * 86400 + last_day) for i in range(1, 7)]
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 135, in <listcomp>
+    forecast['date'] = [(i * 86400 + last_day) for i in range(1, 7)]
+  File "pandas\_libs\tslibs\timestamps.pyx", line 521, in pandas._libs.tslibs.timestamps._Timestamp.__radd__
+  File "pandas\_libs\tslibs\timestamps.pyx", line 499, in pandas._libs.tslibs.timestamps._Timestamp.__add__
+TypeError: Addition/subtraction of integers and integer-arrays with Timestamp is no longer supported.  Instead of adding/subtracting `n`, use `n * obj.freq`
+2023-07-19 21:39:42,982 - main - INFO - forecast request for coin BTC
+2023-07-19 21:39:44,014 - main - INFO - db up to date
+2023-07-19 21:39:44,200 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 59, in get_predictions
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 135, in predict
+    last_day = int(log_minus_mean.index.to_series().iloc[-1])
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'Timestamp'
+2023-07-19 21:40:01,313 - main - INFO - forecast request for coin BTC
+2023-07-19 21:40:02,354 - main - INFO - db up to date
+2023-07-19 21:40:02,538 - main - ERROR - Exception on /forecast [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 59, in get_predictions
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 136, in predict
+    forecast['date'] = [datetime.timedelta(days=i) + last_day for i in range(1, 7)]
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3980, in __setitem__
+    self._set_item(key, value)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 4174, in _set_item
+    value = self._sanitize_column(value)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 4915, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\common.py", line 571, in require_length_match
+    raise ValueError(
+ValueError: Length of values (6) does not match length of index (7)
+2023-07-19 21:40:19,419 - main - INFO - forecast request for coin BTC
+2023-07-19 21:40:20,543 - main - INFO - db up to date
+2023-07-19 21:42:50,799 - main - INFO - forecast request for coin BTC
+2023-07-19 21:42:51,993 - main - INFO - db up to date
+2023-07-19 21:44:43,666 - main - INFO - forecast request for coin BTC
+2023-07-19 21:44:44,759 - main - INFO - db up to date
+2023-07-19 21:45:06,037 - main - INFO - forecast request for coin BTC
+2023-07-19 21:45:07,128 - main - INFO - db up to date
+2023-07-19 21:52:42,991 - main - INFO - forecast request for coin BTC
+2023-07-19 21:52:44,049 - main - INFO - db up to date
+2023-07-19 22:04:37,337 - main - INFO - forecast request for coin BTC
+2023-07-19 22:04:38,507 - main - INFO - db up to date

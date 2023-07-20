@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from flask import Flask, request
@@ -13,7 +14,6 @@ import logging
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.arima.model import ARIMA
 
-
 # create console logger and file logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -24,7 +24,6 @@ handler2 = logging.FileHandler('crypto-opportunity-service.txt')
 handler2.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler2)
 
-
 app = Flask(__name__, static_folder='crypto-opportunity-front-end/dist', static_url_path='')
 limiter = Limiter(
     get_remote_address,
@@ -34,7 +33,7 @@ limiter = Limiter(
 )
 CORS(app)
 
-secret_sauce = json.load(open('secret_sauce.json',))
+secret_sauce = json.load(open('secret_sauce.json', ))
 
 
 @app.route('/')
@@ -50,13 +49,30 @@ def daily_price_hist():
     return data.to_json(orient="records")
 
 
-@app.route("/forecast", methods=['GET'])
-def get_predictions():
+@app.route("/forecast-timeseries", methods=['GET'])
+def forecast_timeseries():
     coin = request.args.get('coin')
     logger.info(f"forecast request for coin {coin}")
     data = fetch_daily_data(coin)
     predictions = predict(data)
-    return predictions.to_json()
+    return predictions.to_json(orient='records')
+
+
+@app.route("/forecast-results", methods=['GET'])
+def forecast_results():
+    coin = request.args.get('coin')
+    logger.info(f"forecast request for coin {coin}")
+    data = fetch_daily_data(coin)
+    predictions = predict(data)
+    last_close = predictions['close'].iloc[-8]
+    last_close_day = predictions['date'].iloc[-8]
+    next_day_price = predictions['close'].iloc[-7]
+    seven_day_price = predictions['close'].iloc[-1]
+    return pd.DataFrame(data={'last_close': [last_close],
+                              'last_close_day': [last_close_day],
+                              'next_day_price': [next_day_price],
+                              'seven_day_price': [seven_day_price],
+                              'coin': coin}).to_json(orient='records')
 
 
 def fetch_daily_data(coin: str):
@@ -97,7 +113,7 @@ def fetch_daily_data_from_coinbase(coin):
         data['coin'] = coin
         return data
     logger.info(f"Got bad response from coinbase: {response.status_code}")
-    return None # hopefully we never get here
+    return None  # hopefully we never get here
 
 
 def fetch_data_from_db(coin: str):
@@ -125,12 +141,16 @@ def predict(hist_data: pd.DataFrame):
     close_data = hist_data[['date', 'close']]
     close_data = close_data.set_index('date')
     close_data_log = np.log(close_data)
-    rolling_mean = close_data_log.rolling(window=12).mean()
-    log_minus_mean = close_data_log - rolling_mean
-    log_minus_mean.dropna(inplace=True)
-    model = ARIMA(log_minus_mean, order=(2, 1, 2))
+    close_data_log.dropna(inplace=True)
+    model = ARIMA(close_data_log, order=(2, 1, 2))
     results = model.fit()
-    return results.forecast(steps=7)
+    forecast = results.forecast(steps=7).to_frame()
+    last_day = close_data_log.index.to_series().iloc[-1]
+    forecast['date'] = [datetime.timedelta(days=i) + last_day for i in range(1, 8)]
+    forecast = forecast.rename(columns={'predicted_mean': 'close'})
+    data_plus_forecast = pd.concat([close_data_log.reset_index(None), forecast])
+    data_plus_forecast['close'] = np.exp(data_plus_forecast['close'])
+    return data_plus_forecast
 
 
 if __name__ == '__main__':
