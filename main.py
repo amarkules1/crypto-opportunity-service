@@ -65,14 +65,29 @@ def forecast_results():
     data = fetch_daily_data(coin)
     predictions = predict(data)
     last_close = predictions['close'].iloc[-8]
-    last_close_day = predictions['date'].iloc[-8]
+    last_timestamp_reported = predictions['date'].iloc[-8]
     next_day_price = predictions['close'].iloc[-7]
     seven_day_price = predictions['close'].iloc[-1]
+    save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported)
     return pd.DataFrame(data={'last_close': [last_close],
-                              'last_close_day': [last_close_day],
+                              'last_timestamp_reported': [last_timestamp_reported],
                               'next_day_price': [next_day_price],
                               'seven_day_price': [seven_day_price],
                               'coin': coin}).to_json(orient='records')
+
+
+def save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported):
+    conn = get_connection()
+    ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
+                                      f"last_timestamp_reported = '{last_timestamp_reported}' and "
+                                      f"coin = '{coin}'")).fetchone()
+    conn.commit()
+    if ct[0] < 1:
+        conn.execute(sqlalchemy.text(
+            f"insert into crypto_predictions_arima"
+            f"(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported) "
+            f"values({last_close},{next_day_price},{seven_day_price},'{coin}','{last_timestamp_reported}')"))
+        conn.commit()
 
 
 def fetch_daily_data(coin: str):
@@ -142,14 +157,14 @@ def predict(hist_data: pd.DataFrame):
     close_data = close_data.set_index('date')
     close_data_log = np.log(close_data)
     close_data_log.dropna(inplace=True)
-    model = ARIMA(close_data_log, order=(2, 1, 2))
+    model = ARIMA(np.asarray(close_data_log), order=(2, 1, 2))
     results = model.fit()
-    forecast = results.forecast(steps=7).to_frame()
+    forecast = pd.DataFrame(data={"close": results.forecast(steps=7)})
     last_day = close_data_log.index.to_series().iloc[-1]
     forecast['date'] = [datetime.timedelta(days=i) + last_day for i in range(1, 8)]
-    forecast = forecast.rename(columns={'predicted_mean': 'close'})
     data_plus_forecast = pd.concat([close_data_log.reset_index(None), forecast])
     data_plus_forecast['close'] = np.exp(data_plus_forecast['close'])
+    data_plus_forecast = data_plus_forecast.sort_values(by='date')
     return data_plus_forecast
 
 

@@ -177,3 +177,369 @@ ValueError: Length of values (6) does not match length of index (7)
 2023-07-19 21:52:44,049 - main - INFO - db up to date
 2023-07-19 22:04:37,337 - main - INFO - forecast request for coin BTC
 2023-07-19 22:04:38,507 - main - INFO - db up to date
+2023-07-19 22:07:08,715 - main - INFO - forecast request for coin ETH
+2023-07-19 22:07:09,661 - main - INFO - db not up to date
+2023-07-19 22:07:09,661 - main - INFO - fetching daily data for ETH from coinbase
+2023-07-19 22:07:09,860 - main - INFO - adding 300 new rows to db
+2023-07-19 22:07:10,864 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 66, in forecast_results
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 145, in predict
+    model = ARIMA(close_data_log, order=(2, 1, 2))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\model.py", line 158, in __init__
+    self._spec_arima = SARIMAXSpecification(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\specification.py", line 446, in __init__
+    self._model = TimeSeriesModel(endog, exog=exog, dates=dates, freq=freq,
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\base\tsa_model.py", line 470, in __init__
+    super().__init__(endog, exog, missing=missing, **kwargs)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\base\model.py", line 270, in __init__
+    super().__init__(endog, exog, **kwargs)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\base\model.py", line 95, in __init__
+    self.data = self._handle_data(endog, exog, missing, hasconst,
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\base\model.py", line 135, in _handle_data
+    data = handle_data(endog, exog, missing, hasconst, **kwargs)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\base\data.py", line 675, in handle_data
+    return klass(endog, exog=exog, missing=missing, hasconst=hasconst,
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\base\data.py", line 84, in __init__
+    self.endog, self.exog = self._convert_endog_exog(endog, exog)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\base\data.py", line 509, in _convert_endog_exog
+    raise ValueError("Pandas data cast to numpy dtype of object. "
+ValueError: Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+2023-07-19 22:08:26,623 - main - INFO - forecast request for coin ETH
+2023-07-19 22:08:27,701 - main - INFO - db up to date
+2023-07-19 22:08:27,728 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 66, in forecast_results
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 147, in predict
+    forecast = results.forecast(steps=7).to_frame()
+AttributeError: 'numpy.ndarray' object has no attribute 'to_frame'
+2023-07-19 22:09:09,439 - main - INFO - forecast request for coin ETH
+2023-07-19 22:09:10,550 - main - INFO - db up to date
+2023-07-19 22:09:52,080 - main - INFO - forecast request for coin ETH
+2023-07-19 22:09:53,224 - main - INFO - db up to date
+2023-07-19 22:09:53,251 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'close'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 67, in forecast_results
+    last_close = predictions['close'].iloc[-8]
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'close'
+2023-07-19 22:10:27,732 - main - INFO - forecast request for coin ETH
+2023-07-19 22:10:28,676 - main - INFO - db up to date
+2023-07-19 22:10:28,703 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'close'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 67, in forecast_results
+    last_close = predictions['close'].iloc[-8]
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'close'
+2023-07-19 22:11:24,923 - main - INFO - forecast request for coin ETH
+2023-07-19 22:11:25,910 - main - INFO - db up to date
+2023-07-19 22:11:25,936 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'close'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 67, in forecast_results
+    last_close = predictions['close'].iloc[-8]
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'close'
+2023-07-19 22:11:51,584 - main - INFO - forecast request for coin ETH
+2023-07-19 22:11:52,528 - main - INFO - db up to date
+2023-07-19 22:12:26,278 - main - INFO - forecast request for coin BTC
+2023-07-19 22:12:27,244 - main - INFO - db up to date
+2023-07-19 22:13:32,718 - main - INFO - forecast request for coin BTC
+2023-07-19 22:13:33,812 - main - INFO - db up to date
+2023-07-19 22:13:42,984 - main - INFO - forecast request for coin BTC
+2023-07-19 22:13:43,925 - main - INFO - db up to date
+2023-07-19 22:13:55,995 - main - INFO - forecast request for coin ETH
+2023-07-19 22:13:56,933 - main - INFO - db up to date
+2023-07-19 22:14:48,587 - main - INFO - forecast request for coin BTC
+2023-07-19 22:14:49,509 - main - INFO - db up to date
+2023-07-19 22:15:06,567 - main - INFO - forecast request for coin BTC
+2023-07-19 22:15:07,604 - main - INFO - db up to date
+2023-07-19 22:17:17,194 - main - INFO - forecast request for coin BTC
+2023-07-19 22:17:18,285 - main - INFO - db up to date
+2023-07-19 22:17:34,598 - main - INFO - forecast request for coin ETH
+2023-07-19 22:17:35,510 - main - INFO - db up to date
+2023-07-19 22:19:55,073 - main - INFO - forecast request for coin BTC
+2023-07-19 22:19:56,071 - main - INFO - db up to date
+2023-07-19 22:22:36,940 - main - INFO - forecast request for coin BTC
+2023-07-19 22:22:38,008 - main - INFO - db up to date
+2023-07-19 22:28:55,069 - main - INFO - forecast request for coin BTC
+2023-07-19 22:28:56,077 - main - INFO - db up to date
+2023-07-19 22:48:48,196 - main - INFO - forecast request for coin BTC
+2023-07-19 22:48:49,329 - main - INFO - db up to date
+2023-07-19 22:48:50,221 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 747, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.SyntaxError: syntax error at or near "00"
+LINE 1: ..._arima where last_timestamp_reported = 2023-07-20 00:00:00+0...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 71, in forecast_results
+    save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 81, in save_results
+    ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1414, in execute
+    return meth(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\sql\elements.py", line 489, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 2325, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 747, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.SyntaxError) syntax error at or near "00"
+LINE 1: ..._arima where last_timestamp_reported = 2023-07-20 00:00:00+0...
+                                                             ^
+
+[SQL: select count(*) from crypto_predictions_arima where last_timestamp_reported = 2023-07-20 00:00:00+00:00 andcoin = 'BTC']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2023-07-19 22:50:42,532 - main - INFO - forecast request for coin BTC
+2023-07-19 22:50:43,646 - main - INFO - db up to date
+2023-07-19 22:50:44,537 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 747, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.SyntaxError: syntax error at or near "00"
+LINE 1: ..._arima where last_timestamp_reported = 2023-07-20 00:00:00+0...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 71, in forecast_results
+    save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 81, in save_results
+    ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1414, in execute
+    return meth(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\sql\elements.py", line 489, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 2325, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 747, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.SyntaxError) syntax error at or near "00"
+LINE 1: ..._arima where last_timestamp_reported = 2023-07-20 00:00:00+0...
+                                                             ^
+
+[SQL: select count(*) from crypto_predictions_arima where last_timestamp_reported = 2023-07-20 00:00:00+00:00 andcoin = 'BTC']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2023-07-19 22:51:32,802 - main - INFO - forecast request for coin BTC
+2023-07-19 22:51:33,898 - main - INFO - db up to date
+2023-07-19 22:51:34,770 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 747, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.SyntaxError: syntax error at or near "andcoin"
+LINE 1: ..._timestamp_reported = '2023-07-20 00:00:00+00:00' andcoin = ...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 71, in forecast_results
+    save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 81, in save_results
+    ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1414, in execute
+    return meth(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\sql\elements.py", line 489, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 2325, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 747, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.SyntaxError) syntax error at or near "andcoin"
+LINE 1: ..._timestamp_reported = '2023-07-20 00:00:00+00:00' andcoin = ...
+                                                             ^
+
+[SQL: select count(*) from crypto_predictions_arima where last_timestamp_reported = '2023-07-20 00:00:00+00:00' andcoin = 'BTC']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2023-07-19 22:51:48,574 - main - INFO - forecast request for coin BTC
+2023-07-19 22:51:49,606 - main - INFO - db up to date
+2023-07-19 22:51:50,593 - main - INFO - ct: (0,)
+2023-07-19 22:51:50,594 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 71, in forecast_results
+    save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 86, in save_results
+    if ct < 1:
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\row.py", line 207, in __lt__
+    return self._op(other, operator.lt)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\row.py", line 186, in _op
+    else op(tuple(self), other)
+TypeError: '<' not supported between instances of 'tuple' and 'int'
+2023-07-19 22:52:37,419 - main - INFO - forecast request for coin BTC
+2023-07-19 22:52:38,578 - main - INFO - db up to date
+2023-07-19 22:52:39,526 - main - INFO - ct: (0,)
+2023-07-19 22:53:59,980 - main - INFO - forecast request for coin ETH
+2023-07-19 22:54:01,017 - main - INFO - db up to date
+2023-07-19 22:54:01,850 - main - INFO - ct: (0,)
