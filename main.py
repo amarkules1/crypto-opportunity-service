@@ -96,6 +96,7 @@ def fetch_daily_data(coin: str):
         logger.info("db not up to date")
         new_data = fetch_daily_data_from_coinbase(coin)
         add_new_data_to_db(new_data, data)
+        return new_data
     else:
         logger.info("db up to date")
     return data
@@ -157,6 +158,7 @@ def predict(hist_data: pd.DataFrame):
     close_data = close_data.set_index('date')
     close_data_log = np.log(close_data)
     close_data_log.dropna(inplace=True)
+    print(close_data_log)
     model = ARIMA(np.asarray(close_data_log), order=(2, 1, 2))
     results = model.fit()
     forecast = pd.DataFrame(data={"close": results.forecast(steps=7)})
@@ -169,4 +171,4 @@ def predict(hist_data: pd.DataFrame):
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=5002, debug=True)

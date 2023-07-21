@@ -543,3 +543,107 @@ TypeError: '<' not supported between instances of 'tuple' and 'int'
 2023-07-19 22:53:59,980 - main - INFO - forecast request for coin ETH
 2023-07-19 22:54:01,017 - main - INFO - db up to date
 2023-07-19 22:54:01,850 - main - INFO - ct: (0,)
+2023-07-20 21:58:14,461 - main - INFO - forecast request for coin BCH
+2023-07-20 21:58:15,516 - main - INFO - db not up to date
+2023-07-20 21:58:15,516 - main - INFO - fetching daily data for BCH from coinbase
+2023-07-20 21:58:15,712 - main - INFO - adding 300 new rows to db
+2023-07-20 21:58:16,744 - main - ERROR - Exception on /forecast-timeseries [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 57, in forecast_timeseries
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 161, in predict
+    model = ARIMA(np.asarray(close_data_log), order=(2, 1, 2))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\model.py", line 158, in __init__
+    self._spec_arima = SARIMAXSpecification(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\specification.py", line 458, in __init__
+    None if faux_endog else np.any(np.isnan(self.endog)))
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+2023-07-20 21:58:32,973 - main - INFO - forecast request for coin BCH
+2023-07-20 21:58:34,192 - main - INFO - db up to date
+2023-07-20 22:01:05,315 - main - INFO - forecast request for coin FIL
+2023-07-20 22:01:06,324 - main - INFO - db not up to date
+2023-07-20 22:01:06,324 - main - INFO - fetching daily data for FIL from coinbase
+2023-07-20 22:01:06,502 - main - INFO - adding 300 new rows to db
+2023-07-20 22:01:07,489 - main - ERROR - Exception on /forecast-timeseries [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 57, in forecast_timeseries
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 161, in predict
+    model = ARIMA(np.asarray(close_data_log), order=(2, 1, 2))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\model.py", line 158, in __init__
+    self._spec_arima = SARIMAXSpecification(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\specification.py", line 456, in __init__
+    print(type(self.endog[0]))
+IndexError: index 0 is out of bounds for axis 0 with size 0
+2023-07-20 22:02:38,669 - main - INFO - forecast request for coin FIL
+2023-07-20 22:02:39,776 - main - INFO - db up to date
+2023-07-20 22:03:05,719 - main - INFO - forecast request for coin CRO
+2023-07-20 22:03:06,599 - main - INFO - db not up to date
+2023-07-20 22:03:06,599 - main - INFO - fetching daily data for CRO from coinbase
+2023-07-20 22:03:06,760 - main - INFO - adding 300 new rows to db
+2023-07-20 22:03:07,749 - main - ERROR - Exception on /forecast-timeseries [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 57, in forecast_timeseries
+    predictions = predict(data)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 161, in predict
+    model = ARIMA(np.asarray(close_data_log), order=(2, 1, 2))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\model.py", line 158, in __init__
+    self._spec_arima = SARIMAXSpecification(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\statsmodels\tsa\arima\specification.py", line 458, in __init__
+    None if faux_endog else np.any(np.isnan(self.endog)))
+TypeError: ufunc 'isnan' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+2023-07-20 22:05:59,952 - main - INFO - forecast request for coin CRO
+2023-07-20 22:06:01,127 - main - INFO - db up to date
+2023-07-20 22:06:01,128 - main - ERROR - Exception on /forecast-timeseries [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 56, in forecast_timeseries
+    data = fetch_daily_data(coin)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 101, in fetch_daily_data
+    return new_data
+UnboundLocalError: local variable 'new_data' referenced before assignment
+2023-07-20 22:06:40,572 - main - INFO - forecast request for coin CRO
+2023-07-20 22:06:41,666 - main - INFO - db up to date
+2023-07-20 22:06:55,844 - main - INFO - forecast request for coin ARB
+2023-07-20 22:06:56,711 - main - INFO - db not up to date
+2023-07-20 22:06:56,711 - main - INFO - fetching daily data for ARB from coinbase
+2023-07-20 22:06:56,883 - main - INFO - adding 121 new rows to db

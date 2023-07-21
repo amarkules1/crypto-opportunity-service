@@ -36,6 +36,8 @@ wrapt = "==1.14.1"
 flask-cors = "*"
 cachetools = "*"
 statsmodels = "*"
+waitress = "*"
+scipy = "*"
 
 [dev-packages]
 
