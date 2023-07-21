@@ -11,7 +11,6 @@ from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 import requests
 import logging
-from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.arima.model import ARIMA
 
 # create console logger and file logger
@@ -155,6 +154,7 @@ def is_db_up_to_date(data: pd.DataFrame):
 
 def predict(hist_data: pd.DataFrame):
     close_data = hist_data[['date', 'close']]
+    close_data = close_data.sort_values(by='date')
     close_data = close_data.set_index('date')
     close_data_log = np.log(close_data)
     close_data_log.dropna(inplace=True)
