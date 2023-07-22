@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from flask import Flask, request
+from flask import Flask, request, redirect
 import pandas as pd
 import numpy as np
 import sqlalchemy
@@ -36,8 +36,8 @@ secret_sauce = json.load(open('secret_sauce.json', ))
 
 
 @app.route('/')
-def status():
-    return "ok"
+def hello():
+    return redirect("/index.html", code=302)
 
 
 @app.route("/daily-price-hist", methods=['GET'])
