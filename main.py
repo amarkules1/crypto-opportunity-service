@@ -75,6 +75,17 @@ def forecast_results():
                               'coin': coin}).to_json(orient='records')
 
 
+@app.route("/forecast-results-all", methods=['GET'])
+def forecast_results_all():
+    conn = get_connection()
+    last_day = conn.execute(sqlalchemy.text(f"select max(last_timestamp_reported) from crypto_predictions_arima")).fetchone()[0]
+    results = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima where last_timestamp_reported = "
+                                          f"'{last_day}'"), conn)
+    results['next_day_pct_change'] = (results['next_day_price'] - results['last_close']) * 100 / results['last_close']
+    results['seven_day_pct_change'] = (results['seven_day_price'] - results['last_close']) * 100 / results['last_close']
+    return results.to_json(orient='records')
+
+
 def save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported):
     conn = get_connection()
     ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
