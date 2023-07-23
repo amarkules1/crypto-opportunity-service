@@ -94,6 +94,7 @@ def forecast_results_all():
     conn.close()
     results['next_day_pct_change'] = (results['next_day_price'] - results['last_close']) * 100 / results['last_close']
     results['seven_day_pct_change'] = (results['seven_day_price'] - results['last_close']) * 100 / results['last_close']
+    results['id'] = results['coin'] + results['last_timestamp_reported'].astype(str)
     return results.to_json(orient='records')
 
 
@@ -103,7 +104,9 @@ def coin_model_performance():
     p = int(request.args.get('p')) if request.args.get('p') else 2
     d = int(request.args.get('d')) if request.args.get('d') else 1
     q = int(request.args.get('q')) if request.args.get('q') else 2
-    return coin_performance(coin, p, d, q).to_json(orient='records')
+    perf = coin_performance(coin, p, d, q)
+    perf['id'] = perf['coin'] + perf['last_timestamp_reported'].astype(str)
+    return perf.to_json(orient='records')
 
 
 @app.route("/composite-model-performance", methods=['GET'])

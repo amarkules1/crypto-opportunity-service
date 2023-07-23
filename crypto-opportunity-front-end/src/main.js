@@ -1,4 +1,16 @@
 import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
+import CoinTable from './components/CoinTable.vue'
+import PerformanceTracker from './components/PerformanceTracker.vue'
 
-createApp(App).mount('#app')
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/cointable', component: CoinTable },
+    { path: '/performancetracker', component: PerformanceTracker },
+    { path: '/', redirect: '/cointable' } // redirect to CoinTable as the default
+  ]
+})
+
+createApp(App).use(router).mount('#app')
