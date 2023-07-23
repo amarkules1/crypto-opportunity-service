@@ -647,3 +647,466 @@ UnboundLocalError: local variable 'new_data' referenced before assignment
 2023-07-20 22:06:56,711 - main - INFO - db not up to date
 2023-07-20 22:06:56,711 - main - INFO - fetching daily data for ARB from coinbase
 2023-07-20 22:06:56,883 - main - INFO - adding 121 new rows to db
+2023-07-22 22:38:12,053 - main - INFO - forecast request for coin BTC
+2023-07-22 22:38:13,373 - main - INFO - db up to date
+2023-07-22 22:38:33,010 - main - ERROR - Exception on /forecast-results [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 75, in forecast_results
+    d = int(request.args.get('d')) if request.args.get('d') else 1
+ValueError: invalid literal for int() with base 10: '2\\'
+2023-07-22 22:38:38,378 - main - INFO - forecast request for coin BTC
+2023-07-22 22:38:39,374 - main - INFO - db up to date
+2023-07-22 22:39:01,164 - main - INFO - forecast request for coin BTC
+2023-07-22 22:39:02,149 - main - INFO - db up to date
+2023-07-22 22:39:18,516 - main - INFO - forecast request for coin BTC
+2023-07-22 22:39:19,410 - main - INFO - db up to date
+2023-07-22 22:53:54,099 - main - INFO - forecast request for coin BTC
+2023-07-22 22:53:55,211 - main - INFO - db up to date
+2023-07-22 22:55:26,066 - main - INFO - calculating performance for 3 rows, period = None
+2023-07-22 22:55:26,067 - main - INFO - calculating performance for 3 rows, period = 30
+2023-07-22 22:55:26,068 - main - INFO - calculating performance for 3 rows, period = 7
+2023-07-22 22:55:26,068 - main - INFO - calculating performance for 3 rows, period = 1
+2023-07-22 22:56:28,172 - main - INFO - calculating performance for 3 rows, period = None
+2023-07-22 22:56:28,173 - main - INFO - calculating performance for 3 rows, period = 30
+2023-07-22 22:56:28,173 - main - INFO - calculating performance for 3 rows, period = 7
+2023-07-22 22:56:28,174 - main - INFO - calculating performance for 1 rows, period = 1
+2023-07-22 23:01:27,969 - main - INFO - calculating performance for 3 rows, period = None
+2023-07-22 23:01:27,970 - main - INFO - calculating performance for 3 rows, period = 30
+2023-07-22 23:01:27,970 - main - INFO - calculating performance for 3 rows, period = 7
+2023-07-22 23:01:27,970 - main - INFO - calculating performance for 1 rows, period = 1
+2023-07-22 23:24:14,416 - main - ERROR - Exception on /composite-model-performance [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 117, in coin_model_performance_all
+    return composite_strategy_performance(p, d, q).to_json(orient='records')
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 153, in composite_strategy_performance
+    total_performance = calc_composite_strategy_performance(forecasts, None)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 168, in calc_composite_strategy_performance
+    days = days.sort_values()
+AttributeError: 'DatetimeArray' object has no attribute 'sort_values'
+2023-07-22 23:27:10,817 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,818 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,819 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,820 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,821 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,822 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,823 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,823 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,824 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:27:10,825 - main - INFO - day_df: Empty DataFrame
+Columns: [id, created_at, last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q, next_day_actual, next_day_pct_change]
+Index: []
+2023-07-22 23:34:24,106 - main - ERROR - Exception on /composite-model-performance [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas\_libs\index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'last_timestamp_reported'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 117, in coin_model_performance_all
+    return composite_strategy_performance(p, d, q).to_json(orient='records')
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 158, in composite_strategy_performance
+    'last_timestamp_reported': [forecasts['last_timestamp_reported'].max()],
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'last_timestamp_reported'
+2023-07-22 23:44:22,940 - main - ERROR - Exception on /composite-model-performance [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 117, in coin_model_performance_all
+    return composite_strategy_performance(p, d, q).to_json(orient='records')
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 155, in composite_strategy_performance
+    daily_bests['next_day_pct_change_actual'] = forecasts[idx]['next_day_pct_change_actual']
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 3980, in __setitem__
+    self._set_item(key, value)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 4174, in _set_item
+    value = self._sanitize_column(value)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 4912, in _sanitize_column
+    return _reindex_for_setitem(Series(value), self.index)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 12025, in _reindex_for_setitem
+    raise err
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\frame.py", line 12020, in _reindex_for_setitem
+    reindexed_value = value.reindex(index)._values
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\series.py", line 5094, in reindex
+    return super().reindex(**kwargs)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\generic.py", line 5289, in reindex
+    return self._reindex_axes(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\generic.py", line 5309, in _reindex_axes
+    obj = obj._reindex_with_indexers(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\generic.py", line 5355, in _reindex_with_indexers
+    new_data = new_data.reindex_indexer(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\internals\managers.py", line 737, in reindex_indexer
+    self.axes[axis]._validate_can_reindex(indexer)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexes\base.py", line 4316, in _validate_can_reindex
+    raise ValueError("cannot reindex on an axis with duplicate labels")
+ValueError: cannot reindex on an axis with duplicate labels
+2023-07-22 23:46:58,848 - main - INFO - row: id                                                             1
+created_at                      2023-07-20 02:52:39.531559+00:00
+last_close                                              29991.13
+next_day_price                                      30036.396124
+seven_day_price                                     29992.207941
+coin                                                         BTC
+last_timestamp_reported                2023-07-20 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                          29838.1
+next_day_pct_change_expected                            0.150932
+next_day_pct_change_actual                             -0.510251
+Name: 0, dtype: object
+2023-07-22 23:46:58,849 - main - INFO - row: id                                                            65
+created_at                      2023-07-22 02:28:59.255482+00:00
+last_close                                                 8.149
+next_day_price                                          8.413831
+seven_day_price                                         8.314679
+coin                                                        LINK
+last_timestamp_reported                2023-07-22 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                            7.938
+next_day_pct_change_expected                            3.249857
+next_day_pct_change_actual                             -2.589275
+Name: 1, dtype: object
+2023-07-22 23:46:58,850 - main - INFO - row: id                                                            45
+created_at                      2023-07-21 23:39:46.695459+00:00
+last_close                                              0.156961
+next_day_price                                          0.163442
+seven_day_price                                         0.159386
+coin                                                         XLM
+last_timestamp_reported                2023-07-21 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                         0.159516
+next_day_pct_change_expected                            4.128966
+next_day_pct_change_actual                              1.627793
+Name: 0, dtype: object
+2023-07-22 23:46:58,851 - main - INFO - row: id                                                             1
+created_at                      2023-07-20 02:52:39.531559+00:00
+last_close                                              29991.13
+next_day_price                                      30036.396124
+seven_day_price                                     29992.207941
+coin                                                         BTC
+last_timestamp_reported                2023-07-20 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                          29838.1
+next_day_pct_change_expected                            0.150932
+next_day_pct_change_actual                             -0.510251
+Name: 0, dtype: object
+2023-07-22 23:46:58,851 - main - INFO - row: id                                                            65
+created_at                      2023-07-22 02:28:59.255482+00:00
+last_close                                                 8.149
+next_day_price                                          8.413831
+seven_day_price                                         8.314679
+coin                                                        LINK
+last_timestamp_reported                2023-07-22 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                            7.938
+next_day_pct_change_expected                            3.249857
+next_day_pct_change_actual                             -2.589275
+Name: 1, dtype: object
+2023-07-22 23:46:58,852 - main - INFO - row: id                                                            45
+created_at                      2023-07-21 23:39:46.695459+00:00
+last_close                                              0.156961
+next_day_price                                          0.163442
+seven_day_price                                         0.159386
+coin                                                         XLM
+last_timestamp_reported                2023-07-21 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                         0.159516
+next_day_pct_change_expected                            4.128966
+next_day_pct_change_actual                              1.627793
+Name: 0, dtype: object
+2023-07-22 23:46:58,853 - main - INFO - row: id                                                             1
+created_at                      2023-07-20 02:52:39.531559+00:00
+last_close                                              29991.13
+next_day_price                                      30036.396124
+seven_day_price                                     29992.207941
+coin                                                         BTC
+last_timestamp_reported                2023-07-20 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                          29838.1
+next_day_pct_change_expected                            0.150932
+next_day_pct_change_actual                             -0.510251
+Name: 0, dtype: object
+2023-07-22 23:46:58,854 - main - INFO - row: id                                                            65
+created_at                      2023-07-22 02:28:59.255482+00:00
+last_close                                                 8.149
+next_day_price                                          8.413831
+seven_day_price                                         8.314679
+coin                                                        LINK
+last_timestamp_reported                2023-07-22 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                            7.938
+next_day_pct_change_expected                            3.249857
+next_day_pct_change_actual                             -2.589275
+Name: 1, dtype: object
+2023-07-22 23:46:58,854 - main - INFO - row: id                                                            45
+created_at                      2023-07-21 23:39:46.695459+00:00
+last_close                                              0.156961
+next_day_price                                          0.163442
+seven_day_price                                         0.159386
+coin                                                         XLM
+last_timestamp_reported                2023-07-21 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                         0.159516
+next_day_pct_change_expected                            4.128966
+next_day_pct_change_actual                              1.627793
+Name: 0, dtype: object
+2023-07-22 23:46:58,855 - main - INFO - row: id                                                            45
+created_at                      2023-07-21 23:39:46.695459+00:00
+last_close                                              0.156961
+next_day_price                                          0.163442
+seven_day_price                                         0.159386
+coin                                                         XLM
+last_timestamp_reported                2023-07-21 00:00:00+00:00
+p                                                              2
+d                                                              1
+q                                                              2
+next_day_actual                                         0.159516
+next_day_pct_change_expected                            4.128966
+next_day_pct_change_actual                              1.627793
+Name: 0, dtype: object
+2023-07-22 23:49:08,665 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:49:08,672 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:49:08,678 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:49:08,684 - main - INFO - df:    id                       created_at  last_close  next_day_price  seven_day_price coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0  45 2023-07-21 23:39:46.695459+00:00    0.156961        0.163442         0.159386  XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:50:21,696 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:50:21,702 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:50:21,708 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:50:21,714 - main - INFO - df:    id                       created_at  last_close  next_day_price  seven_day_price coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0  45 2023-07-21 23:39:46.695459+00:00    0.156961        0.163442         0.159386  XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:57:17,148 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:57:17,155 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:57:17,161 - main - INFO - df:    id                       created_at    last_close  next_day_price  seven_day_price  coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0   1 2023-07-20 02:52:39.531559+00:00  29991.130000    30036.396124     29992.207941   BTC 2023-07-20 00:00:00+00:00  2  1  2     29838.100000                      0.150932                   -0.510251
+1  65 2023-07-22 02:28:59.255482+00:00      8.149000        8.413831         8.314679  LINK 2023-07-22 00:00:00+00:00  2  1  2         7.938000                      3.249857                   -2.589275
+0  45 2023-07-21 23:39:46.695459+00:00      0.156961        0.163442         0.159386   XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-22 23:57:17,167 - main - INFO - df:    id                       created_at  last_close  next_day_price  seven_day_price coin   last_timestamp_reported  p  d  q  next_day_actual  next_day_pct_change_expected  next_day_pct_change_actual
+0  45 2023-07-21 23:39:46.695459+00:00    0.156961        0.163442         0.159386  XLM 2023-07-21 00:00:00+00:00  2  1  2         0.159516                      4.128966                    1.627793
+2023-07-23 00:03:58,839 - main - ERROR - Exception on /all-model-performance [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 128, in all_model_performance
+    df = pd.concat([df, coin_performance(coin, p, d, q)])
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 138, in coin_performance
+    hold_performance = (forecasts['last_close'].iloc[-1] / forecasts['last_close'].iloc[0]) * 100
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexing.py", line 1073, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexing.py", line 1625, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\pandas\core\indexing.py", line 1557, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds
+2023-07-23 00:15:03,808 - main - ERROR - Exception on /all-model-performance [GET]
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 145, in __init__
+    self._dbapi_connection = engine.raw_connection()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 3269, in raw_connection
+    return self.pool.connect()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 452, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 1255, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 716, in checkout
+    rec = pool._do_get()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\impl.py", line 168, in _do_get
+    with util.safe_reraise():
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 147, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\impl.py", line 166, in _do_get
+    return self._create_connection()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 393, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 678, in __init__
+    self.__connect()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 902, in __connect
+    with util.safe_reraise():
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 147, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 898, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\create.py", line 640, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 580, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\psycopg2\__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: connection to server at "db.bnzvpgbsfpxmidihybtc.supabase.co" (44.213.102.60), port 5432 failed: FATAL:  remaining connection slots are reserved for non-replication superuser connections
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask_cors\extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\flask\app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 123, in all_model_performance
+    df = composite_strategy_performance(2, 1, 2)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 169, in composite_strategy_performance
+    forecasts = pd.concat([forecasts, get_coin_dailies_with_actual(coin, p, d, q)])
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\cachetools\__init__.py", line 737, in wrapper
+    v = func(*args, **kwargs)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 155, in get_coin_dailies_with_actual
+    conn = get_connection()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\main.py", line 283, in get_connection
+    return sqlalchemy.create_engine(secret_sauce['db_conn_string']).connect()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 3245, in connect
+    return self._connection_cls(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 147, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 2410, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 145, in __init__
+    self._dbapi_connection = engine.raw_connection()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\base.py", line 3269, in raw_connection
+    return self.pool.connect()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 452, in connect
+    return _ConnectionFairy._checkout(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 1255, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 716, in checkout
+    rec = pool._do_get()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\impl.py", line 168, in _do_get
+    with util.safe_reraise():
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 147, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\impl.py", line 166, in _do_get
+    return self._create_connection()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 393, in _create_connection
+    return _ConnectionRecord(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 678, in __init__
+    self.__connect()
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 902, in __connect
+    with util.safe_reraise():
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 147, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\pool\base.py", line 898, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\create.py", line 640, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\sqlalchemy\engine\default.py", line 580, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+  File "C:\Users\amarl\dev\webapps\crypto-opportunity-service\.venv\lib\site-packages\psycopg2\__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "db.bnzvpgbsfpxmidihybtc.supabase.co" (44.213.102.60), port 5432 failed: FATAL:  remaining connection slots are reserved for non-replication superuser connections
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
