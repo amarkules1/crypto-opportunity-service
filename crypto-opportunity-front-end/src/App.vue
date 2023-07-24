@@ -3,8 +3,8 @@
     <nav class="header">
       <div class="title">Coin Performance Tracker</div>
       <div class="nav-buttons">
-        <router-link class="btn" active-class="active" to="/cointable">CoinTable</router-link>
-        <router-link class="btn" active-class="active" to="/performancetracker">PerformanceTracker</router-link>
+        <router-link class="btn" active-class="active" to="/cointable">Forecasts</router-link>
+        <router-link class="btn" active-class="active" to="/performancetracker">Performance Tracker</router-link>
       </div>
     </nav>
     <!-- Where the component will be displayed -->

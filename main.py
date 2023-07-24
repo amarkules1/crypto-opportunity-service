@@ -94,7 +94,7 @@ def forecast_results_all():
     conn.close()
     results['next_day_pct_change'] = (results['next_day_price'] - results['last_close']) * 100 / results['last_close']
     results['seven_day_pct_change'] = (results['seven_day_price'] - results['last_close']) * 100 / results['last_close']
-    results['id'] = results['coin'] + results['last_timestamp_reported'].astype(str)
+    results['id'] = range(len(results))
     return results.to_json(orient='records')
 
 
@@ -105,12 +105,12 @@ def coin_model_performance():
     d = int(request.args.get('d')) if request.args.get('d') else 1
     q = int(request.args.get('q')) if request.args.get('q') else 2
     perf = coin_performance(coin, p, d, q)
-    perf['id'] = perf['coin'] + perf['last_timestamp_reported'].astype(str)
+    perf['id'] = range(len(perf))
     return perf.to_json(orient='records')
 
 
 @app.route("/composite-model-performance", methods=['GET'])
-def coin_model_performance_all():
+def composite_model_performance():
     p = int(request.args.get('p')) if request.args.get('p') else 2
     d = int(request.args.get('d')) if request.args.get('d') else 1
     q = int(request.args.get('q')) if request.args.get('q') else 2
@@ -126,6 +126,7 @@ def all_model_performance():
         df = pd.concat([df, coin_performance(coin, 2, 1, 2)])
         df = pd.concat([df, coin_performance(coin, 3, 4, 3)])
         df = pd.concat([df, coin_performance(coin, 3, 2, 3)])
+    df['id'] = range(len(df))
     return df.to_json(orient='records')
 
 
