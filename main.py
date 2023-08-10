@@ -138,7 +138,7 @@ def coin_performance(coin, p, d, q):
     last_day_performance = calc_period_change(forecasts, 1)
     hold_performance = (forecasts['last_close'].iloc[-1] / forecasts['last_close'].iloc[0]) * 100 - 100 if len(forecasts) > 0 else 0
     return pd.DataFrame(data={'total_performance': [total_performance],
-                              'last_timestamp_reported': [forecasts['last_timestamp_reported'].max()],
+                              'last_timestamp_reported': [forecasts['last_timestamp_reported'].max() + pd.Timedelta(days=1)],
                               'last_month_performance': [last_month_performance],
                               'last_week_performance': [last_week_performance],
                               'last_day_performance': [last_day_performance],
@@ -178,7 +178,7 @@ def composite_strategy_performance(p, d, q):
     last_week_performance = calc_composite_strategy_performance(daily_bests, 7)
     last_day_performance = calc_composite_strategy_performance(daily_bests, 1)
     return pd.DataFrame(data={'total_performance': [total_performance],
-                              'last_timestamp_reported': [forecasts['last_timestamp_reported'].max()],
+                              'last_timestamp_reported': [forecasts['last_timestamp_reported'].max() + pd.Timedelta(days=1)],
                               'last_month_performance': [last_month_performance],
                               'last_week_performance': [last_week_performance],
                               'last_day_performance': [last_day_performance],

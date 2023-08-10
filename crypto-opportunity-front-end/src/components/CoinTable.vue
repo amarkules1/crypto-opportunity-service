@@ -10,6 +10,9 @@
             <th @click="sortTable('next_day_pct_change')">Next Day % Change <span v-if="currentSort=='next_day_pct_change'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('seven_day_price')">Seven Day Price <span v-if="currentSort=='seven_day_price'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('seven_day_pct_change')">Seven Day % Change <span v-if="currentSort=='seven_day_pct_change'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('p')">P <span v-if="currentSort=='p'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('d')">D <span v-if="currentSort=='d'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('q')">Q <span v-if="currentSort=='q'">{{ sortAscending ? '▲' : '▼' }}</span></th>
           </tr>
         </thead>
         <tbody>
@@ -21,6 +24,9 @@
             <td>{{ item.next_day_pct_change }}</td>
             <td>{{ item.seven_day_price }}</td>
             <td>{{ item.seven_day_pct_change }}</td>
+            <td>{{ item.p }}</td>
+            <td>{{ item.d }}</td>
+            <td>{{ item.q }}</td>
           </tr>
         </tbody>
       </table>
