@@ -1,5 +1,6 @@
 import datetime
 import json
+from threading import Thread
 
 from flask import Flask, request, redirect
 import pandas as pd
@@ -13,6 +14,7 @@ import requests
 import logging
 from statsmodels.tsa.arima.model import ARIMA
 import cachetools
+import time
 
 # create console logger and file logger
 logger = logging.getLogger(__name__)
@@ -23,6 +25,7 @@ logger.addHandler(handler1)
 handler2 = logging.FileHandler('crypto-opportunity-service.txt')
 handler2.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler2)
+
 
 app = Flask(__name__, static_folder='crypto-opportunity-front-end/dist', static_url_path='')
 limiter = Limiter(
@@ -47,7 +50,7 @@ def daily_price_hist():
     coin = request.args.get('coin')
     request.args.get('coin')
     logger.info(f"price-hist request for coin {coin}")
-    data = fetch_daily_data(coin)
+    data = fetch_up_to_date_daily_data(coin)
     return data.to_json(orient="records")
 
 
@@ -58,8 +61,8 @@ def forecast_timeseries():
     d = int(request.args.get('d')) if request.args.get('d') else 1
     q = int(request.args.get('q')) if request.args.get('q') else 2
     logger.info(f"forecast request for coin {coin}")
-    data = fetch_daily_data(coin)
-    predictions = predict(data, p, d, q)
+    data = fetch_up_to_date_daily_data(coin)
+    predictions = predict_next_7(data, p, d, q)
     return predictions.to_json(orient='records')
 
 
@@ -70,18 +73,39 @@ def forecast_results():
     d = int(request.args.get('d')) if request.args.get('d') else 1
     q = int(request.args.get('q')) if request.args.get('q') else 2
     logger.info(f"forecast request for coin {coin}")
-    data = fetch_daily_data(coin)
-    predictions = predict(data, p, d, q)
+    data = fetch_up_to_date_daily_data(coin)
+    predictions = predict_next_7(data, p, d, q)
     last_close = predictions['close'].iloc[-8]
     last_timestamp_reported = predictions['date'].iloc[-8]
     next_day_price = predictions['close'].iloc[-7]
     seven_day_price = predictions['close'].iloc[-1]
-    save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q)
+    save_predictions_for_coin(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q)
     return pd.DataFrame(data={'last_close': [last_close],
                               'last_timestamp_reported': [last_timestamp_reported],
                               'next_day_price': [next_day_price],
                               'seven_day_price': [seven_day_price],
                               'coin': coin}).to_json(orient='records')
+
+
+@app.route("/forecast-results-async", methods=['GET'])
+def initiate_async():
+    thread = Thread(target=forecast_results_async)
+    thread.start()
+    return {"success": True}
+
+
+def forecast_results_async():
+    for coin in RH_COINS:
+        for p, d, q in ((2, 1, 2), (3, 4, 3), (3, 2, 3)):
+            logger.info(f"forecast request for coin {coin} with p={p}, d={d}, q={q}")
+            data = fetch_up_to_date_daily_data(coin)
+            predictions = predict_next_7(data, p, d, q)
+            last_close = predictions['close'].iloc[-8]
+            last_timestamp_reported = predictions['date'].iloc[-8]
+            next_day_price = predictions['close'].iloc[-7]
+            seven_day_price = predictions['close'].iloc[-1]
+            save_predictions_for_coin(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q)
+        time.sleep(10)
 
 
 @app.route("/forecast-results-all", methods=['GET'])
@@ -104,7 +128,7 @@ def coin_model_performance():
     p = int(request.args.get('p')) if request.args.get('p') else 2
     d = int(request.args.get('d')) if request.args.get('d') else 1
     q = int(request.args.get('q')) if request.args.get('q') else 2
-    perf = coin_performance(coin, p, d, q)
+    perf = calculate_historical_coin_performance(coin, p, d, q)
     perf['id'] = range(len(perf))
     return perf.to_json(orient='records')
 
@@ -123,15 +147,16 @@ def all_model_performance():
     df = pd.concat([df, composite_strategy_performance(3, 4, 3)])
     df = pd.concat([df, composite_strategy_performance(3, 2, 3)])
     for coin in RH_COINS:
-        df = pd.concat([df, coin_performance(coin, 2, 1, 2)])
-        df = pd.concat([df, coin_performance(coin, 3, 4, 3)])
-        df = pd.concat([df, coin_performance(coin, 3, 2, 3)])
+        df = pd.concat([df, calculate_historical_coin_performance(coin, 2, 1, 2)])
+        df = pd.concat([df, calculate_historical_coin_performance(coin, 3, 4, 3)])
+        df = pd.concat([df, calculate_historical_coin_performance(coin, 3, 2, 3)])
+    df['total_performance_vs_coin'] = df['total_performance'] - df['hold_performance']
     df['id'] = range(len(df))
     return df.to_json(orient='records')
 
 
-def coin_performance(coin, p, d, q):
-    forecasts = get_coin_dailies_with_actual(coin, p, d, q)
+def calculate_historical_coin_performance(coin, p, d, q):
+    forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
     total_performance = calc_period_change(forecasts, None)
     last_month_performance = calc_period_change(forecasts, 30)
     last_week_performance = calc_period_change(forecasts, 7)
@@ -151,7 +176,7 @@ def coin_performance(coin, p, d, q):
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
-def get_coin_dailies_with_actual(coin, p, d, q) -> pd.DataFrame:
+def get_coin_forecasts_with_actual(coin, p, d, q) -> pd.DataFrame:
     conn = get_connection()
     forecasts = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima where coin = '{coin}' and "
                                             f"p = {p} and d = {d} and q = {q}"), conn)
@@ -166,9 +191,9 @@ def composite_strategy_performance(p, d, q):
     forecasts = None
     for coin in RH_COINS:
         if forecasts is None:
-            forecasts = get_coin_dailies_with_actual(coin, p, d, q)
+            forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
         else:
-            forecasts = pd.concat([forecasts, get_coin_dailies_with_actual(coin, p, d, q)])
+            forecasts = pd.concat([forecasts, get_coin_forecasts_with_actual(coin, p, d, q)])
     forecasts['next_day_pct_change_expected'] = (forecasts['next_day_price'] - forecasts['last_close']) * 100 / forecasts['last_close']
     forecasts['next_day_pct_change_actual'] = (forecasts['next_day_actual'] - forecasts['last_close']) * 100 / forecasts['last_close']
     idx = forecasts.groupby(['last_timestamp_reported'])['next_day_pct_change_expected'].transform(max) == forecasts['next_day_pct_change_expected']
@@ -215,7 +240,7 @@ def calc_value_change(starting_price, predicted_price, ending_price, investment)
     return (ending_price / starting_price) * investment
 
 
-def save_results(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q):
+def save_predictions_for_coin(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q):
     conn = get_connection()
     ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
                                       f"last_timestamp_reported = '{last_timestamp_reported}' and "
@@ -231,19 +256,19 @@ def save_results(last_close, next_day_price, seven_day_price, coin, last_timesta
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
-def fetch_daily_data(coin: str):
-    data = fetch_data_from_db(coin)
-    if not is_db_up_to_date(data):
+def fetch_up_to_date_daily_data(coin: str):
+    data = fetch_price_hist_from_db(coin)
+    if not is_price_hist_up_to_date(data):
         logger.info("db not up to date")
         new_data = fetch_daily_data_from_coinbase(coin)
-        add_new_data_to_db(new_data, data)
+        update_coin_price_hist(new_data, data)
         return new_data
     else:
         logger.info("db up to date")
     return data
 
 
-def add_new_data_to_db(new_data: pd.DataFrame, data: pd.DataFrame):
+def update_coin_price_hist(new_data: pd.DataFrame, data: pd.DataFrame):
     if data is None or data.empty:
         to_add = new_data
     else:
@@ -275,7 +300,7 @@ def fetch_daily_data_from_coinbase(coin):
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
-def fetch_data_from_db(coin: str):
+def fetch_price_hist_from_db(coin: str):
     conn = get_connection()
     data = pd.read_sql(sql.text(f"select coin, open, high, low, close, date, vol_fiat, volume"
                                 f" from crypto_prices where coin = '{coin}'"), conn)
@@ -288,7 +313,7 @@ def get_connection():
     return sqlalchemy.create_engine(secret_sauce['db_conn_string']).connect()
 
 
-def is_db_up_to_date(data: pd.DataFrame):
+def is_price_hist_up_to_date(data: pd.DataFrame):
     if data is None or data.empty:
         return False
     db_date = data['date'].max().tz_localize(None)
@@ -297,13 +322,12 @@ def is_db_up_to_date(data: pd.DataFrame):
     return db_date > yesterday
 
 
-def predict(hist_data: pd.DataFrame, p, d, q):
+def predict_next_7(hist_data: pd.DataFrame, p, d, q):
     close_data = hist_data[['date', 'close']]
     close_data = close_data.sort_values(by='date')
     close_data = close_data.set_index('date')
     close_data_log = np.log(close_data)
     close_data_log.dropna(inplace=True)
-    print(close_data_log)
     model = ARIMA(np.asarray(close_data_log), order=(p, d, q))
     results = model.fit()
     forecast = pd.DataFrame(data={"close": results.forecast(steps=7)})

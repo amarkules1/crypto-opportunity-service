@@ -6,13 +6,13 @@
             <th @click="sortTable('coin')">Coin <span v-if="currentSort=='coin'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('last_timestamp_reported')">Last Timestamp Reported <span v-if="currentSort=='last_timestamp_reported'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('last_close')">Last Close <span v-if="currentSort=='last_close'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('next_day_price')">Next Day Price <span v-if="currentSort=='next_day_price'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('next_day_pct_change')">Next Day % Change <span v-if="currentSort=='next_day_pct_change'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('seven_day_price')">Seven Day Price <span v-if="currentSort=='seven_day_price'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('seven_day_pct_change')">Seven Day % Change <span v-if="currentSort=='seven_day_pct_change'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('p')">P <span v-if="currentSort=='p'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('d')">D <span v-if="currentSort=='d'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('q')">Q <span v-if="currentSort=='q'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('next_day_pct_change')">Next Day % Change <span v-if="currentSort=='next_day_pct_change'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('next_day_price')">Next Day Price <span v-if="currentSort=='next_day_price'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('seven_day_pct_change')">Seven Day % Change <span v-if="currentSort=='seven_day_pct_change'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('seven_day_price')">Seven Day Price <span v-if="currentSort=='seven_day_price'">{{ sortAscending ? '▲' : '▼' }}</span></th>
           </tr>
         </thead>
         <tbody>
@@ -20,13 +20,13 @@
             <td>{{ item.coin }}</td>
             <td>{{ formatDate(item.last_timestamp_reported) }}</td>
             <td>{{ item.last_close }}</td>
-            <td>{{ item.next_day_price }}</td>
-            <td>{{ item.next_day_pct_change }}</td>
-            <td>{{ item.seven_day_price }}</td>
-            <td>{{ item.seven_day_pct_change }}</td>
             <td>{{ item.p }}</td>
             <td>{{ item.d }}</td>
             <td>{{ item.q }}</td>
+            <td>{{ item.next_day_pct_change }}</td>
+            <td>{{ item.next_day_price }}</td>
+            <td>{{ item.seven_day_pct_change }}</td>
+            <td>{{ item.seven_day_price }}</td>
           </tr>
         </tbody>
       </table>

@@ -3,6 +3,7 @@
     <nav class="header">
       <div class="title">Coin Performance Tracker</div>
       <div class="nav-buttons">
+        <button class="btn" @click=refreshData()>refresh data</button>
         <router-link class="btn" active-class="active" to="/cointable">Forecasts</router-link>
         <router-link class="btn" active-class="active" to="/performancetracker">Performance Tracker</router-link>
       </div>
@@ -13,8 +14,15 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'App',
+
+  methods: {
+    refreshData() {
+      axios.get('http://45.56.125.213:5002/forecast-results-async')
+    }
+  }
 }
 </script>
 

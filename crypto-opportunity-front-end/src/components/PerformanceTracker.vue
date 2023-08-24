@@ -5,30 +5,32 @@
           <tr>
             <th @click="sortTable('coin')">Coin <span v-if="currentSort=='coin'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('last_timestamp_reported')">Last Timestamp Reported <span v-if="currentSort=='last_timestamp_reported'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('total_performance')">Total Performance <span v-if="currentSort=='total_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('last_month_performance')">Last Month Performance<span v-if="currentSort=='last_month_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('last_week_performance')">Last Week Performance <span v-if="currentSort=='last_week_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('last_day_performance')">Last Day Performance <span v-if="currentSort=='last_day_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('hold_performance')">Hold Performance <span v-if="currentSort=='hold_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
-            <th @click="sortTable('total_days')">Days Since Start <span v-if="currentSort=='total_days'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('p')">P <span v-if="currentSort=='p'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('d')">D <span v-if="currentSort=='d'">{{ sortAscending ? '▲' : '▼' }}</span></th>
             <th @click="sortTable('q')">Q <span v-if="currentSort=='q'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('total_performance')">Total Perf <span v-if="currentSort=='total_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('total_performance_vs_coin')">Total Perf vs Coin <span v-if="currentSort=='total_performance_vs_coin'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('last_month_performance')">Last Month<span v-if="currentSort=='last_month_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('last_week_performance')">Last Week<span v-if="currentSort=='last_week_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('last_day_performance')">Last Day<span v-if="currentSort=='last_day_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('hold_performance')">Hold Performance <span v-if="currentSort=='hold_performance'">{{ sortAscending ? '▲' : '▼' }}</span></th>
+            <th @click="sortTable('total_days')">Days Since Start <span v-if="currentSort=='total_days'">{{ sortAscending ? '▲' : '▼' }}</span></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in sortedData" :key="item.id">
             <td>{{ item.coin }}</td>
             <td>{{ formatDate(item.last_timestamp_reported) }}</td>
+            <td>{{ item.p }}</td>
+            <td>{{ item.d }}</td>
+            <td>{{ item.q }}</td>
             <td>{{ item.total_performance }}</td>
+            <td>{{ item.total_performance_vs_coin }}</td>
             <td>{{ item.last_month_performance }}</td>
             <td>{{ item.last_week_performance }}</td>
             <td>{{ item.last_day_performance }}</td>
             <td>{{ item.hold_performance }}</td>
             <td>{{ item.total_days }}</td>
-            <td>{{ item.p }}</td>
-            <td>{{ item.d }}</td>
-            <td>{{ item.q }}</td>
           </tr>
         </tbody>
       </table>
