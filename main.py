@@ -1,5 +1,6 @@
 import datetime
 import json
+import sys
 from threading import Thread
 
 from flask import Flask, request, redirect
@@ -143,10 +144,14 @@ def composite_model_performance():
 
 @app.route("/all-model-performance", methods=['GET'])
 def all_model_performance():
+    logger.info("composite_strategy_performance(2, 1, 2)")
     df = composite_strategy_performance(2, 1, 2)
+    logger.info("composite_strategy_performance(3,4,3)")
     df = pd.concat([df, composite_strategy_performance(3, 4, 3)])
+    logger.info("composite_strategy_performance(3,2,3")
     df = pd.concat([df, composite_strategy_performance(3, 2, 3)])
     for coin in RH_COINS:
+        logger.info(f"calculate_historical_coin_performance({coin}, 2, 1, 2)")
         df = pd.concat([df, calculate_historical_coin_performance(coin, 2, 1, 2)])
         df = pd.concat([df, calculate_historical_coin_performance(coin, 3, 4, 3)])
         df = pd.concat([df, calculate_historical_coin_performance(coin, 3, 2, 3)])
@@ -157,6 +162,7 @@ def all_model_performance():
 
 def calculate_historical_coin_performance(coin, p, d, q):
     forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
+    logger.info(f"got existing data, running calculations")
     total_performance = calc_period_change(forecasts, None)
     last_month_performance = calc_period_change(forecasts, 30)
     last_week_performance = calc_period_change(forecasts, 7)
