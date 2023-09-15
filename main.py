@@ -144,11 +144,8 @@ def composite_model_performance():
 
 @app.route("/all-model-performance", methods=['GET'])
 def all_model_performance():
-    logger.info("composite_strategy_performance(2, 1, 2)")
     df = composite_strategy_performance(2, 1, 2)
-    logger.info("composite_strategy_performance(3,4,3)")
     df = pd.concat([df, composite_strategy_performance(3, 4, 3)])
-    logger.info("composite_strategy_performance(3,2,3")
     df = pd.concat([df, composite_strategy_performance(3, 2, 3)])
     for coin in RH_COINS:
         logger.info(f"calculate_historical_coin_performance({coin}, 2, 1, 2)")
@@ -162,7 +159,6 @@ def all_model_performance():
 
 def calculate_historical_coin_performance(coin, p, d, q):
     forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
-    logger.info(f"got existing data, running calculations")
     total_performance = calc_period_change(forecasts, None)
     last_month_performance = calc_period_change(forecasts, 30)
     last_week_performance = calc_period_change(forecasts, 7)
@@ -196,10 +192,12 @@ def get_coin_forecasts_with_actual(coin, p, d, q) -> pd.DataFrame:
 def composite_strategy_performance(p, d, q):
     forecasts = None
     for coin in RH_COINS:
+        logger.info(f"get_coin_forecasts_with_actual({coin}...) - caching enabled - fetch from DB")
         if forecasts is None:
             forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
         else:
             forecasts = pd.concat([forecasts, get_coin_forecasts_with_actual(coin, p, d, q)])
+    logger.info(f"running performance calculations")
     forecasts['next_day_pct_change_expected'] = (forecasts['next_day_price'] - forecasts['last_close']) * 100 / forecasts['last_close']
     forecasts['next_day_pct_change_actual'] = (forecasts['next_day_actual'] - forecasts['last_close']) * 100 / forecasts['last_close']
     idx = forecasts.groupby(['last_timestamp_reported'])['next_day_pct_change_expected'].transform(max) == forecasts['next_day_pct_change_expected']
@@ -208,6 +206,7 @@ def composite_strategy_performance(p, d, q):
     last_month_performance = calc_composite_strategy_performance(daily_bests, 30)
     last_week_performance = calc_composite_strategy_performance(daily_bests, 7)
     last_day_performance = calc_composite_strategy_performance(daily_bests, 1)
+    logger.info(f"done running performance calculations")
     return pd.DataFrame(data={'total_performance': [total_performance],
                               'last_timestamp_reported': [forecasts['last_timestamp_reported'].max() + pd.Timedelta(days=1)],
                               'last_month_performance': [last_month_performance],
