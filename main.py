@@ -16,8 +16,13 @@ import logging
 from statsmodels.tsa.arima.model import ARIMA
 import cachetools
 import time
+from dotenv import load_dotenv, find_dotenv
+from repos.db_utils import get_connection
+from repos.crypto_predictions_arima import CryptoPredictionsArimaRepository
+
 
 # create console logger and file logger
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 handler1 = logging.StreamHandler()
@@ -39,6 +44,10 @@ CORS(app)
 
 secret_sauce = json.load(open('secret_sauce.json', ))
 RH_COINS = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'SHIB', 'AVAX', 'ETC','UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ', 'BCH']
+_ = load_dotenv(find_dotenv())
+
+#define repos
+crypto_predictions_arima_repo = CryptoPredictionsArimaRepository()
 
 
 @app.route('/')
@@ -112,9 +121,7 @@ def forecast_results_async():
 @app.route("/forecast-results-all", methods=['GET'])
 def forecast_results_all():
     conn = get_connection()
-    last_day = conn.execute(sqlalchemy.text(f"select max(last_timestamp_reported) from crypto_predictions_arima")).fetchone()[0]
-    results = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima where last_timestamp_reported = "
-                                          f"'{last_day}'"), conn)
+    results = crypto_predictions_arima_repo.get_data_for_last_day()
     conn.commit()
     conn.close()
     results['next_day_pct_change'] = (results['next_day_price'] - results['last_close']) * 100 / results['last_close']
@@ -180,8 +187,7 @@ def calculate_historical_coin_performance(coin, p, d, q):
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
 def get_coin_forecasts_with_actual(coin, p, d, q) -> pd.DataFrame:
     conn = get_connection()
-    forecasts = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima where coin = '{coin}' and "
-                                            f"p = {p} and d = {d} and q = {q}"), conn)
+    forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
     conn.commit()
     conn.close()
     forecasts = forecasts.sort_values(by='last_timestamp_reported')
@@ -246,18 +252,8 @@ def calc_value_change(starting_price, predicted_price, ending_price, investment)
 
 
 def save_predictions_for_coin(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q):
-    conn = get_connection()
-    ct = conn.execute(sqlalchemy.text(f"select count(*) from crypto_predictions_arima where "
-                                      f"last_timestamp_reported = '{last_timestamp_reported}' and "
-                                      f"coin = '{coin}' and p = {p} and d = {d} and q = {q}")).fetchone()
-    conn.commit()
-    if ct[0] < 1:
-        conn.execute(sqlalchemy.text(
-            f"insert into crypto_predictions_arima"
-            f"(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q) "
-            f"values({last_close},{next_day_price},{seven_day_price},'{coin}','{last_timestamp_reported}', {p}, {d}, {q})"))
-        conn.commit()
-    conn.close()
+    crypto_predictions_arima_repo.save_predictions_for_coin(last_close, next_day_price, seven_day_price, coin,
+                                                            last_timestamp_reported, p, d, q)
 
 
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
@@ -312,10 +308,6 @@ def fetch_price_hist_from_db(coin: str):
     conn.commit()
     conn.close()
     return data
-
-
-def get_connection():
-    return sqlalchemy.create_engine(secret_sauce['db_conn_string']).connect()
 
 
 def is_price_hist_up_to_date(data: pd.DataFrame):

@@ -38,6 +38,7 @@ cachetools = "*"
 statsmodels = "*"
 waitress = "*"
 scipy = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
