@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copy Pipfile and Pipfile.lock to the working directory
-COPY Pipfile Pipfile.lock secret_sauce.json ./
+COPY Pipfile Pipfile.lock .env ./
 
 # Install pipenv, libpq-dev, and use pipenv to install Python dependencies
 RUN apt-get update && apt-get install -y gcc libpq-dev && \
