@@ -18,7 +18,6 @@ import time
 from dotenv import load_dotenv, find_dotenv
 from repos.db_utils import get_connection
 from repos.crypto_predictions_arima import CryptoPredictionsArimaRepository
-from flask_caching import Cache
 
 
 # create console logger and file logger
@@ -41,7 +40,6 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 CORS(app)
-cache = Cache(app)
 
 RH_COINS = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'SHIB', 'AVAX', 'ETC', 'UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ',
             'BCH']
