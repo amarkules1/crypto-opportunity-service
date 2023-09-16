@@ -13,8 +13,8 @@ class CryptoPredictionsArimaRepository():
         conn.commit()
         conn.close()
 
-    def get_coin_forecasts_with_actual(self, symbol: str, p: int, d: int, q: int):
-        forecasts = self.all_data[self.all_data['symbol'] == symbol]
+    def get_coin_forecasts_with_actual(self, coin: str, p: int, d: int, q: int):
+        forecasts = self.all_data[self.all_data['coin'] == coin]
         forecasts = forecasts[forecasts['p'] == p]
         forecasts = forecasts[forecasts['d'] == d]
         forecasts = forecasts[forecasts['q'] == q]
@@ -55,3 +55,5 @@ class CryptoPredictionsArimaRepository():
 
     def _get_last_timestamp_reported(self):
         return self.all_data['last_timestamp_reported'].max()
+
+

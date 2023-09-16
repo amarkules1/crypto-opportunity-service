@@ -6,7 +6,6 @@ from threading import Thread
 from flask import Flask, request, redirect
 import pandas as pd
 import numpy as np
-import sqlalchemy
 from sqlalchemy import sql
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -14,7 +13,6 @@ from flask_cors import CORS
 import requests
 import logging
 from statsmodels.tsa.arima.model import ARIMA
-import cachetools
 import time
 from dotenv import load_dotenv, find_dotenv
 from repos.db_utils import get_connection
@@ -42,11 +40,11 @@ limiter = Limiter(
 )
 CORS(app)
 
-secret_sauce = json.load(open('secret_sauce.json', ))
-RH_COINS = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'SHIB', 'AVAX', 'ETC','UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ', 'BCH']
+RH_COINS = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'SHIB', 'AVAX', 'ETC', 'UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ',
+            'BCH']
 _ = load_dotenv(find_dotenv())
 
-#define repos
+# define repos
 crypto_predictions_arima_repo = CryptoPredictionsArimaRepository()
 
 
@@ -170,9 +168,11 @@ def calculate_historical_coin_performance(coin, p, d, q):
     last_month_performance = calc_period_change(forecasts, 30)
     last_week_performance = calc_period_change(forecasts, 7)
     last_day_performance = calc_period_change(forecasts, 1)
-    hold_performance = (forecasts['last_close'].iloc[-1] / forecasts['last_close'].iloc[0]) * 100 - 100 if len(forecasts) > 0 else 0
+    hold_performance = (forecasts['last_close'].iloc[-1] / forecasts['last_close'].iloc[0]) * 100 - 100 if len(
+        forecasts) > 0 else 0
     return pd.DataFrame(data={'total_performance': [total_performance],
-                              'last_timestamp_reported': [forecasts['last_timestamp_reported'].max() + pd.Timedelta(days=1)],
+                              'last_timestamp_reported': [
+                                  forecasts['last_timestamp_reported'].max() + pd.Timedelta(days=1)],
                               'last_month_performance': [last_month_performance],
                               'last_week_performance': [last_week_performance],
                               'last_day_performance': [last_day_performance],
@@ -184,7 +184,6 @@ def calculate_historical_coin_performance(coin, p, d, q):
                               'q': q})
 
 
-@cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
 def get_coin_forecasts_with_actual(coin, p, d, q) -> pd.DataFrame:
     conn = get_connection()
     forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
@@ -247,7 +246,7 @@ def calc_period_change(df, period):
 
 def calc_value_change(starting_price, predicted_price, ending_price, investment):
     if predicted_price < starting_price:
-        return investment # if we predict a loss, don't invest
+        return investment  # if we predict a loss, don't invest
     return (ending_price / starting_price) * investment
 
 
@@ -256,7 +255,6 @@ def save_predictions_for_coin(last_close, next_day_price, seven_day_price, coin,
                                                             last_timestamp_reported, p, d, q)
 
 
-@cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
 def fetch_up_to_date_daily_data(coin: str):
     data = fetch_price_hist_from_db(coin)
     if not is_price_hist_up_to_date(data):
@@ -300,7 +298,6 @@ def fetch_daily_data_from_coinbase(coin):
     return None  # hopefully we never get here
 
 
-@cachetools.cached(cache=cachetools.TTLCache(maxsize=1024, ttl=60))
 def fetch_price_hist_from_db(coin: str):
     conn = get_connection()
     data = pd.read_sql(sql.text(f"select coin, open, high, low, close, date, vol_fiat, volume"
@@ -334,6 +331,24 @@ def predict_next_7(hist_data: pd.DataFrame, p, d, q):
     data_plus_forecast['close'] = np.exp(data_plus_forecast['close'])
     data_plus_forecast = data_plus_forecast.sort_values(by='date')
     return data_plus_forecast
+
+
+def testlog(msg):
+    file_handler = logging.FileHandler('output.log')
+    handler = logging.StreamHandler()
+    file_handler.setLevel(logging.DEBUG)
+    handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
+    ))
+    handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
+    ))
+    app.logger.addHandler(handler)
+    app.logger.addHandler(file_handler)
+    app.logger.error(msg)
 
 
 if __name__ == '__main__':
