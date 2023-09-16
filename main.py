@@ -1,6 +1,7 @@
 import datetime
 import json
 import sys
+from cachetools import cached, LRUCache
 from threading import Thread
 
 from flask import Flask, request, redirect
@@ -17,6 +18,7 @@ import time
 from dotenv import load_dotenv, find_dotenv
 from repos.db_utils import get_connection
 from repos.crypto_predictions_arima import CryptoPredictionsArimaRepository
+from flask_caching import Cache
 
 
 # create console logger and file logger
@@ -39,6 +41,7 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 CORS(app)
+cache = Cache(app)
 
 RH_COINS = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'SHIB', 'AVAX', 'ETC', 'UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ',
             'BCH']
@@ -162,8 +165,11 @@ def all_model_performance():
     return df.to_json(orient='records')
 
 
+@cached(cache=LRUCache(maxsize=None))
 def calculate_historical_coin_performance(coin, p, d, q):
-    forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
+    logger.info(f"fetching arima prediction data {coin}")
+    forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
+    logger.info(f"calculating period performances for {coin}")
     total_performance = calc_period_change(forecasts, None)
     last_month_performance = calc_period_change(forecasts, 30)
     last_week_performance = calc_period_change(forecasts, 7)
@@ -184,24 +190,15 @@ def calculate_historical_coin_performance(coin, p, d, q):
                               'q': q})
 
 
-def get_coin_forecasts_with_actual(coin, p, d, q) -> pd.DataFrame:
-    conn = get_connection()
-    forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
-    conn.commit()
-    conn.close()
-    forecasts = forecasts.sort_values(by='last_timestamp_reported')
-    forecasts['next_day_actual'] = forecasts['last_close'].shift(-1)
-    return forecasts.dropna(subset=['next_day_actual'])
-
-
 def composite_strategy_performance(p, d, q):
     forecasts = None
+    logger.info(f"getting all coin perf for composite_strategy_performance({p}, {d}, {q})")
     for coin in RH_COINS:
         logger.info(f"get_coin_forecasts_with_actual({coin}...) - caching enabled - fetch from DB")
         if forecasts is None:
-            forecasts = get_coin_forecasts_with_actual(coin, p, d, q)
+            forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
         else:
-            forecasts = pd.concat([forecasts, get_coin_forecasts_with_actual(coin, p, d, q)])
+            forecasts = pd.concat([forecasts, crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)])
     logger.info(f"running performance calculations")
     forecasts['next_day_pct_change_expected'] = (forecasts['next_day_price'] - forecasts['last_close']) * 100 / forecasts['last_close']
     forecasts['next_day_pct_change_actual'] = (forecasts['next_day_actual'] - forecasts['last_close']) * 100 / forecasts['last_close']

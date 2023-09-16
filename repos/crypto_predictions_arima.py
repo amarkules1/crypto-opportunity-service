@@ -1,18 +1,20 @@
 import pandas as pd
 import sqlalchemy
-
+from cachetools import cached, LRUCache, TTLCache
 from repos.db_utils import get_connection
 
 
-class CryptoPredictionsArimaRepository():
+class CryptoPredictionsArimaRepository:
     all_data: pd.DataFrame = None
 
-    def __init__(self):
-        conn = get_connection()
-        self.all_data = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima"), conn)
-        conn.commit()
-        conn.close()
+    conn = None
 
+    def __init__(self):
+        self.conn = get_connection()
+        self.all_data = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima"), self.conn)
+        self.conn.commit()
+
+    @cached(cache=LRUCache(maxsize=None))
     def get_coin_forecasts_with_actual(self, coin: str, p: int, d: int, q: int):
         forecasts = self.all_data[self.all_data['coin'] == coin]
         forecasts = forecasts[forecasts['p'] == p]
@@ -32,14 +34,12 @@ class CryptoPredictionsArimaRepository():
         existing = existing[existing['q'] == q]
         if len(existing) < 1:
             # may need to spin up a separate thread for this...
-            conn = get_connection()
-            conn.execute(sqlalchemy.text(
+            self.conn.execute(sqlalchemy.text(
                 f"insert into crypto_predictions_arima"
                 f"(last_close, next_day_price, seven_day_price, coin, last_timestamp_reported, p, d, q) "
                 f"values({last_close},{next_day_price},{seven_day_price},'{coin}','{last_timestamp_reported}', "
                 f"{p}, {d}, {q})"))
-            conn.commit()
-            conn.close()
+            self.conn.commit()
             # add to in-mem df
             self.all_data = self.all_data.append({'last_close': last_close,
                                                   'next_day_price': next_day_price,
