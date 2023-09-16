@@ -165,9 +165,7 @@ def all_model_performance():
 
 @cached(cache=TTLCache(maxsize=(2**20), ttl=60))
 def calculate_historical_coin_performance(coin, p, d, q):
-    logger.info(f"fetching arima prediction data {coin}")
     forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
-    logger.info(f"calculating period performances for {coin}")
     total_performance = calc_period_change(forecasts, None)
     last_month_performance = calc_period_change(forecasts, 30)
     last_week_performance = calc_period_change(forecasts, 7)
@@ -190,14 +188,11 @@ def calculate_historical_coin_performance(coin, p, d, q):
 
 def composite_strategy_performance(p, d, q):
     forecasts = None
-    logger.info(f"getting all coin perf for composite_strategy_performance({p}, {d}, {q})")
     for coin in RH_COINS:
-        logger.info(f"get_coin_forecasts_with_actual({coin}...) - caching enabled - fetch from DB")
         if forecasts is None:
             forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)
         else:
             forecasts = pd.concat([forecasts, crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)])
-    logger.info(f"running performance calculations")
     forecasts['next_day_pct_change_expected'] = (forecasts['next_day_price'] - forecasts['last_close']) * 100 / forecasts['last_close']
     forecasts['next_day_pct_change_actual'] = (forecasts['next_day_actual'] - forecasts['last_close']) * 100 / forecasts['last_close']
     idx = forecasts.groupby(['last_timestamp_reported'])['next_day_pct_change_expected'].transform(max) == forecasts['next_day_pct_change_expected']
@@ -206,7 +201,6 @@ def composite_strategy_performance(p, d, q):
     last_month_performance = calc_composite_strategy_performance(daily_bests, 30)
     last_week_performance = calc_composite_strategy_performance(daily_bests, 7)
     last_day_performance = calc_composite_strategy_performance(daily_bests, 1)
-    logger.info(f"done running performance calculations")
     return pd.DataFrame(data={'total_performance': [total_performance],
                               'last_timestamp_reported': [forecasts['last_timestamp_reported'].max() + pd.Timedelta(days=1)],
                               'last_month_performance': [last_month_performance],
@@ -326,24 +320,6 @@ def predict_next_7(hist_data: pd.DataFrame, p, d, q):
     data_plus_forecast['close'] = np.exp(data_plus_forecast['close'])
     data_plus_forecast = data_plus_forecast.sort_values(by='date')
     return data_plus_forecast
-
-
-def testlog(msg):
-    file_handler = logging.FileHandler('output.log')
-    handler = logging.StreamHandler()
-    file_handler.setLevel(logging.DEBUG)
-    handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s '
-        '[in %(pathname)s:%(lineno)d]'
-    ))
-    handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s '
-        '[in %(pathname)s:%(lineno)d]'
-    ))
-    app.logger.addHandler(handler)
-    app.logger.addHandler(file_handler)
-    app.logger.error(msg)
 
 
 if __name__ == '__main__':
