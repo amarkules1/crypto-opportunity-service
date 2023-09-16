@@ -1,7 +1,7 @@
 import datetime
 import json
 import sys
-from cachetools import cached, LRUCache
+from cachetools import cached, LRUCache, TTLCache
 from threading import Thread
 
 from flask import Flask, request, redirect
@@ -163,7 +163,7 @@ def all_model_performance():
     return df.to_json(orient='records')
 
 
-@cached(cache=LRUCache(maxsize=None))
+@cached(cache=TTLCache(maxsize=(2**20), ttl=60))
 def calculate_historical_coin_performance(coin, p, d, q):
     logger.info(f"fetching arima prediction data {coin}")
     forecasts = crypto_predictions_arima_repo.get_coin_forecasts_with_actual(coin, p, d, q)

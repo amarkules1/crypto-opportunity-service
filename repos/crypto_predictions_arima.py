@@ -14,7 +14,7 @@ class CryptoPredictionsArimaRepository:
         self.all_data = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima"), self.conn)
         self.conn.commit()
 
-    @cached(cache=LRUCache(maxsize=None))
+    @cached(cache=TTLCache(maxsize=(2**20), ttl=60))
     def get_coin_forecasts_with_actual(self, coin: str, p: int, d: int, q: int):
         forecasts = self.all_data[self.all_data['coin'] == coin]
         forecasts = forecasts[forecasts['p'] == p]
