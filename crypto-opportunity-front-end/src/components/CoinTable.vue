@@ -76,7 +76,7 @@
       }
     },
     async created() {
-      const response = await axios.get('http://45.56.125.213:5002/forecast-results-all')
+      const response = await axios.get('/forecast-results-all')
       this.data = response.data
     }
   }

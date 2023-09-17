@@ -10,9 +10,7 @@ class CryptoPredictionsArimaRepository:
     conn = None
 
     def __init__(self):
-        self.conn = get_connection()
-        self.all_data = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima"), self.conn)
-        self.conn.commit()
+        self.fetch_all_data()
 
     @cached(cache=TTLCache(maxsize=(2**20), ttl=60))
     def get_coin_forecasts_with_actual(self, coin: str, p: int, d: int, q: int):
@@ -41,17 +39,15 @@ class CryptoPredictionsArimaRepository:
                 f"{p}, {d}, {q})"))
             self.conn.commit()
             # add to in-mem df
-            self.all_data = self.all_data.append({'last_close': last_close,
-                                                  'next_day_price': next_day_price,
-                                                  'seven_day_price': seven_day_price,
-                                                  'coin': coin,
-                                                  'last_timestamp_reported': last_timestamp_reported,
-                                                  'p': p,
-                                                  'd': d,
-                                                  'q': q}, ignore_index=True)
+            self.fetch_all_data()
 
     def get_data_for_last_day(self):
         return self.all_data[self.all_data['last_timestamp_reported'] == self._get_last_timestamp_reported()]
+
+    def fetch_all_data(self):
+        self.conn = get_connection()
+        self.all_data = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima"), self.conn)
+        self.conn.commit()
 
     def _get_last_timestamp_reported(self):
         return self.all_data['last_timestamp_reported'].max()
