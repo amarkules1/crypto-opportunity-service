@@ -1,7 +1,6 @@
 import datetime
 import json
-import sys
-from cachetools import cached, LRUCache, TTLCache
+from cachetools import cached, TTLCache
 from threading import Thread
 
 from flask import Flask, request, redirect
@@ -41,7 +40,7 @@ limiter = Limiter(
 )
 CORS(app)
 
-RH_COINS = ['BTC', 'ETH', 'ADA', 'SOL', 'DOGE', 'SHIB', 'AVAX', 'ETC', 'UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ',
+RH_COINS = ['SOL', 'BTC', 'ETH', 'ADA', 'DOGE', 'SHIB', 'AVAX', 'ETC', 'UNI', 'LTC', 'LINK', 'XLM', 'AAVE', 'XTZ',
             'BCH']
 _ = load_dotenv(find_dotenv())
 
