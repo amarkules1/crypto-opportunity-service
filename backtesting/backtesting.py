@@ -12,7 +12,7 @@ def backtest_buy_sell_performance(data, p, d, q, prediction_days):
             actual_price = data['close'].iloc[i + prediction_days]
             last_day_close = test_data['close'].iloc[-1]
             perf += actual_price - last_day_close
-    return (perf/data.iloc[0]['close']) * 100
+    return (perf/data.iloc[prediction_days - 1]['close']) * 100
 
 
 def get_next_day_buy_signal(data, p, d, q):
