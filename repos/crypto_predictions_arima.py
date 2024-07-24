@@ -10,6 +10,7 @@ class CryptoPredictionsArimaRepository:
     conn = None
 
     def __init__(self):
+        self.conn = get_connection()
         self.fetch_all_data()
 
     @cached(cache=TTLCache(maxsize=(2**20), ttl=60))
@@ -45,9 +46,7 @@ class CryptoPredictionsArimaRepository:
         return self.all_data[self.all_data['last_timestamp_reported'] == self._get_last_timestamp_reported()]
 
     def fetch_all_data(self):
-        self.conn = get_connection()
         self.all_data = pd.read_sql(sqlalchemy.text(f"select * from crypto_predictions_arima"), self.conn)
-        self.conn.commit()
 
     def _get_last_timestamp_reported(self):
         return self.all_data['last_timestamp_reported'].max()

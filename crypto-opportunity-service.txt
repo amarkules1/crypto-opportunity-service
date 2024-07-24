@@ -1,0 +1,8 @@
+2024-07-23 20:04:01,176 - main - INFO - forecast request for coin SOL
+2024-07-23 20:04:02,293 - main - INFO - db not up to date
+2024-07-23 20:04:02,293 - main - INFO - fetching daily data for SOL from coinbase
+2024-07-23 20:04:02,457 - main - INFO - adding 2 new rows to db
+2024-07-23 20:04:08,274 - main - INFO - forecast request for coin SOL
+2024-07-23 20:04:09,140 - main - INFO - db up to date
+2024-07-23 20:18:14,298 - main - INFO - forecast request for coin SOL
+2024-07-23 20:18:15,243 - main - INFO - db up to date

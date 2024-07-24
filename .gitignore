@@ -2,3 +2,4 @@
 /.venv/
 /.idea/
 /.env
+/crypto-opportunity-front-end/node_modules/
